@@ -33,3 +33,5 @@ class CQueue {
         return stack2.removeLast();
     }
 }
+
+总结：降低耦合性，每个栈实现单个功能。
