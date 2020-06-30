@@ -14,24 +14,40 @@
 [[],[],[5],[2],[],[]]
 输出：[null,-1,null,null,5,2]
 
+/*
+数据结构：2个栈=》链表
+分成两个操作，并了解每个函数的意义，进行实现
+操作：“队列尾部”插入整数    +       “队列头部”删除整数
+*/
 class CQueue {
     LinkedList<Integer> stack1,stack2;
     public CQueue() {
         stack1 = new LinkedList<Integer>();
         stack2 = new LinkedList<Integer>();
     }
-    
+    //appendTail:在插入栈中，压入整数
     public void appendTail(int value) {
         stack1.add(value);
     }
-    
+    //deleteHead:在删除栈中，
+    //1.有整数，删除整数
+    //2.无整数，先压入整数，再删除。
     public int deleteHead() {
-        if(!stack2.isEmpty())   return stack2.removeLast();
-        if(stack1.isEmpty())    return -1;
+        if(!stack2.isEmpty())
+            return stack2.pop();
+        if(stack1.isEmpty())
+            return -1;
         while(!stack1.isEmpty())
-            stack2.addLast(stack1.removeLast());
-        return stack2.removeLast();
+            stack2.add(stack1.pop());
+        return stack2.pop();
     }
 }
+
+/**
+ * Your CQueue object will be instantiated and called as such:
+ * CQueue obj = new CQueue();
+ * obj.appendTail(value);
+ * int param_2 = obj.deleteHead();
+ */
 
 总结：降低耦合性，每个栈实现单个功能。
