@@ -1,7 +1,5 @@
 给定一个按非递减顺序排序的整数数组 A，返回每个数字的平方组成的新数组，要求也按非递减顺序排序。
 
- 
-
 示例 1：
 
 输入：[-4,-1,0,3,10]
@@ -40,6 +38,29 @@ class Solution {
 空间复杂度：O(1)
 
 2.双指针法
+
+class Solution {
+    public int[] sortedSquares(int[] A) {
+        int[] B=new int[A.length];
+        int i=0,j=A.length-1;
+        int n=j;
+        while(n>=0){
+            if(A[j]*A[j]>A[i]*A[i]){
+                B[n]=A[j]*A[j];
+                j--;
+            }
+            else{
+                B[n]=A[i]*A[i];
+                i++;
+            }
+            n--;
+        }
+        return B;
+    }
+}   
+
+时间复杂度：O(n)
+空间复杂度：O(1)
 
 总结：
     1.优先分析题目问题与数组内元素的特点，根据其特点进行区分，分别遍历进行操作。
