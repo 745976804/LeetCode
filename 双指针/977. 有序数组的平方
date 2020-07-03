@@ -1,0 +1,47 @@
+给定一个按非递减顺序排序的整数数组 A，返回每个数字的平方组成的新数组，要求也按非递减顺序排序。
+
+ 
+
+示例 1：
+
+输入：[-4,-1,0,3,10]
+输出：[0,1,9,16,100]
+示例 2：
+
+输入：[-7,-3,2,3,11]
+输出：[4,9,9,49,121]
+
+1.暴力法
+class Solution {
+    public int[] sortedSquares(int[] A) {
+        int minAbs,temp,minIndex;
+        //对每个元素遍历
+        for(int i=0;i<A.length;i++){
+            minAbs=Math.abs(A[i]);
+            minIndex=i;
+            //找到绝对值最小的元素
+            for(int j=i+1;j<A.length;j++){
+                if(Math.abs(A[j])<minAbs){
+                    minIndex=j;
+                    minAbs=Math.abs(A[minIndex]);
+                }
+            }
+            //遍历完成后，将元素i与最小元素交换
+            temp=A[i];
+            A[i]=A[minIndex];
+            A[minIndex]=temp;
+            A[i]=A[i]*A[i];
+        }
+        return A;
+    }
+}
+
+时间复杂度：O(n^2)
+空间复杂度：O(1)
+
+2.双指针法
+
+总结：
+    1.优先分析题目问题与数组内元素的特点，根据其特点进行区分，分别遍历进行操作。
+    
+    2.注意修改是否需要原地修改数组，有些情况在修改数组时会改变的遍历元素。
