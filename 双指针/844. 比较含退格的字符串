@@ -71,9 +71,41 @@ class Solution {
 
 反向遍历字符串，如果遍历到一个退格符，那么再往左第一个非退格字符将会被删除，剩余未被删除的字符就是最终的字符串。
 
-时间复杂度：O(M + N)O(M+N)
+class Solution {
+    public boolean backspaceCompare(String S, String T) {
+        int i = S.length() - 1, j = T.length() - 1;
+        int skipS = 0, skipT = 0;
+
+        while (i >= 0 || j >= 0) { // While there may be chars in build(S) or build (T)
+            while (i >= 0) { // Find position of next possible char in build(S)
+                if (S.charAt(i) == '#') {skipS++; i--;}
+                else if (skipS > 0) {skipS--; i--;}
+                else break;
+            }
+            while (j >= 0) { // Find position of next possible char in build(T)
+                if (T.charAt(j) == '#') {skipT++; j--;}
+                else if (skipT > 0) {skipT--; j--;}
+                else break;
+            }
+            // If two actual characters are different
+            if (i >= 0 && j >= 0 && S.charAt(i) != T.charAt(j))
+                return false;
+            // If expecting to compare char vs nothing
+            if ((i >= 0) != (j >= 0))
+                return false;
+            i--; j--;
+        }
+        return true;
+    }
+}
+
+时间复杂度：O(M + N)
 空间复杂度：O(1)
 
 总结：
-    1.先要分清题目，才能明白为什么用双指针（题目中有两个不同的部分：普通的字符和#），一个指针找特殊的#，另一个要形成新字符串
-    双指针使用时不能破坏数组结构
+    本题  跳过  特别字符的方法值得学习。
+    
+    1.双指针使用时不能破坏数组结构,因此本题在一层循环中进行比较保持数组结构安全。
+    
+    2.双指针并不是不能用嵌套循环,如本题虽然用了嵌套while,但是用了break减少了搜索空间,时间复杂度仍为线性。
+    
