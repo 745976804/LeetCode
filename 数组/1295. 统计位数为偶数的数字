@@ -48,7 +48,7 @@ class Solution {
         */
 
         /*
-        3.遍历数组，过滤奇位数进行统计个数
+        3.运用Arrays.stream遍历数组，过滤奇位数进行统计个数
         return (int)Arrays.stream(nums).filter(x -> (int)(Math.log10(x) + 1) % 2 == 0).count();
         */
     }
