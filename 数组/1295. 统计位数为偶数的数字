@@ -1,0 +1,62 @@
+给你一个整数数组 nums，请你返回其中位数为 偶数 的数字的个数。
+
+
+示例 1：
+
+输入：nums = [12,345,2,6,7896]
+输出：2
+解释：
+12 是 2 位数字（位数为偶数） 
+345 是 3 位数字（位数为奇数）  
+2 是 1 位数字（位数为奇数） 
+6 是 1 位数字 位数为奇数） 
+7896 是 4 位数字（位数为偶数）  
+因此只有 12 和 7896 是位数为偶数的数字
+示例 2：
+
+输入：nums = [555,901,482,1771]
+输出：1 
+解释： 
+只有 1771 是位数为偶数的数字。
+
+class Solution {
+    public int findNumbers(int[] nums) {
+        /*
+        1.计算除10不为0的次数
+        int cnt,n=0;
+        for(int i=0;i<nums.length;i++){
+            cnt=0;
+            while(nums[i]/10!=0){
+                cnt++;
+                nums[i]/=10;
+            }
+            if(cnt%2!=0)
+                n++;
+        }
+        return n;
+        */
+
+        /*
+        2.转化为字符串求长度
+        int res=0;
+        for(int i:nums){
+            if(String.valueOf(i).length()%2==0){
+                res++;
+            }
+        }
+        return res;
+        */
+
+        /*
+        3.遍历数组，过滤奇位数进行统计个数
+        return (int)Arrays.stream(nums).filter(x -> (int)(Math.log10(x) + 1) % 2 == 0).count();
+        */
+    }
+}
+
+总结：
+    1.字符串与数字转化
+    
+    2.数组Stream遍历的用法，filter函数，count函数，注意返回值;
+    
+    3.Math.log10(x)函数
