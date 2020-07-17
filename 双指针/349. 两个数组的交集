@@ -1,0 +1,107 @@
+给定两个数组，编写一个函数来计算它们的交集。
+
+示例 1：
+
+输入：nums1 = [1,2,2,1], nums2 = [2,2]
+输出：[2]
+示例 2：
+
+输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+输出：[9,4]
+ 
+
+说明：
+
+输出结果中的每个元素一定是唯一的。
+我们可以不考虑输出结果的顺序。
+
+class Solution {
+    /*
+    //方法1和2：求数组的交集，利用Set的不可重复、快速查找的特点从O(n^2)降低到O(nlogn),但是需要先将数组转化为Set
+    public int[] intersection(int[] nums1, int[] nums2) {
+        HashSet<Integer> set1 = new HashSet<Integer>();
+        HashSet<Integer> set2 = new HashSet<Integer>();
+        //注意：基本类型的遍历添加需要包装成对象的形式
+        for(Integer num : nums1)
+            set1.add(num);
+        for(Integer num : nums2)
+            set2.add(num);
+        set1.retainAll(set2);
+        int n=0;
+        int[] res=new int[set1.size()];
+        for(Integer s : set1)
+            res[n++]=s;
+        return Arrays.copyOf(res,n);
+    }
+    */
+
+    /*
+    public int[] intersection(int[] nums1, int[] nums2) {
+        //求数组的交集，利用Set的不可重复、快速查找的特点从O(n^2)降低到O(nlogn),但是需要先将数组转化为Set
+        int length=0;
+        int[] arr=new int[Math.min(nums1.length,nums2.length)];
+        HashSet<Integer> set1 = new HashSet<Integer>();
+        HashSet<Integer> set2 = new HashSet<Integer>();
+        //注意：基本类型的遍历添加需要包装成对象的形式
+        for(Integer num : nums1)
+            set1.add(num);
+        for(Integer num : nums2)
+            set2.add(num);
+        if(set1.size()<set2.size())
+            return intersection(set1,set2);
+        else
+            return intersection(set2,set1);
+    }
+
+    public int[] intersection(HashSet<Integer> set1, HashSet<Integer> set2){
+        int n=0;
+        int[] res=new int[set1.size()];
+        for(Integer s : set1){
+            if(set2.contains(s)){
+                res[n++]=s;
+            }
+        }
+        return Arrays.copyOf(res,n);
+    }
+    */
+    
+    /*
+    //3.双指针法
+    public int[] intersection(int[] nums1, int[] nums2) {
+        //对A,B数组运用快速排序
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        //对两个排序好的数组从左往右遍历
+        //1.A数组的元素小于B数组的元素，A数组元素向右移
+        //2.B数组的元素小于A数组的元素，B数组元素向右移
+        //3.当A、B数组元素相等时，将其存放入，并A,B数组同时向右移动到更大的元素（与前一个不相等）
+        //不必考虑第4点，因为这种情况发生时，一个数组的所有元素都小于另一个数组的后面的元素了
+        //4.如果A指针到达A数组尾部，B组帧还没到达B数组尾部，若A数组的最大值小于B数组的元素值，则终止循环，否则继续运行
+        int n=0,i=0,j=0;
+        int[] arr = new int[Math.min(nums1.length,nums2.length)];
+        while(i<nums1.length && j<nums2.length){
+            if(nums1[i]<nums2[j])
+                i++;
+            else if(nums1[i]>nums2[j])
+                j++;
+            else{
+                if(n==0)
+                    arr[n++]=nums1[i];
+                else if(nums1[i]!=arr[n-1]){
+                    arr[n++]=nums1[i];
+                }
+                i++;
+                j++;    
+            }
+        }
+        return Arrays.copyOf(arr,n);
+        //左闭右开
+        //return Arrays.copyOfRange(arr,0,n);
+    }
+    */
+}
+
+总结：
+    1.双指针常与排序结合：利用排序使数组产生规律，从而用双指针遍历时不需要回头进行遍历
+    
+    2.利用Set的不可重复和快速查找的特点降低复杂度，（Set的创建，添加元素，求交集的方法）
