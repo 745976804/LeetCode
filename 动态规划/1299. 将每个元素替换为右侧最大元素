@@ -1,0 +1,79 @@
+给你一个数组 arr ，请你将每个元素用它右边最大的元素替换，如果是最后一个元素，用 -1 替换。
+
+完成所有替换操作后，请你返回这个数组。
+
+示例：
+
+输入：arr = [17,18,5,4,6,1]
+输出：[18,6,6,6,1,-1]
+ 
+
+提示：
+
+1 <= arr.length <= 10^4
+1 <= arr[i] <= 10^5
+
+class Solution {
+    /*
+    //1.暴力法：对于第i个元素,从第i+1个元素进行遍历找出最大的元素
+    public int[] replaceElements(int[] arr) {
+        int max;
+        for(int i=0;i<arr.length-1;i++){
+            max=arr[i+1];
+            for(int j=i+1;j<arr.length;j++){
+                if(arr[j]>max)
+                    max=arr[j];
+            }
+            arr[i]=max;
+        }
+        arr[arr.length-1]=-1;
+        return arr;
+    }
+    */
+
+    /*
+    public int[] replaceElements(int[] arr) {
+        //对于第i个元素,从第i+1个元素进行遍历找出最大的元素
+        //从最右侧2两个元素（length-1,length-2）开始比较，较大的元素为length-3位置的值
+        //这样只让两个数比较大小，结束之后更新原数组，留下较大的
+        //res数组保留的是右边数组的最大值，只需要让res的最近放入的元素与arr数组比较即可
+        if(arr.length==1){
+            arr[0]=-1;
+            return arr;
+        }
+        else if(arr.length==2){
+            arr[0]=arr[1];
+            arr[1]=-1;
+            return arr;
+        }
+        int[] res = new int[arr.length];
+        //每次循环，将两者之间较大的数保留下来
+        for(int i=res.length-3;i>=0;i--){
+            res[i]=Math.max(arr[i+1],arr[i+2]);
+            arr[i]=Math.max(arr[i],res[i]);;
+        }
+        res[res.length-2]=arr[arr.length-1];
+        res[res.length-1]=-1;
+        return res;
+    }
+    */
+
+    public int[] replaceElements(int[] arr) {
+        //对于第i个元素,从第i+1个元素进行遍历找出最大的元素
+        //从最右侧2两个元素（length-1,length-2）开始比较，较大的元素为length-3位置的值
+        //这样只让两个数比较大小，结束之后更新原数组，留下较大的
+        //res数组保留的是右边数组的最大值，只需要让res的最近放入的元素与arr数组比较即可
+        int[] res = new int[arr.length];
+        //每次循环，将两者之间较大的数保留下来
+        for(int i=res.length-2;i>=0;i--)
+            res[i]=Math.max(res[i+1],arr[i+1]);
+        res[res.length-1]=-1;
+        return res;
+    }
+}
+
+总结：
+     1.从简单的情况开始思考，例如从两个数开始，慢慢想到了动态规划方法，通过空间换取时间
+     
+     
+     
