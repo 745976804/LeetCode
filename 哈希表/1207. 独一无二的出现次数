@@ -1,0 +1,119 @@
+给你一个整数数组 arr，请你帮忙统计数组中每个数的出现次数。
+
+如果每个数的出现次数都是独一无二的，就返回 true；否则返回 false。
+
+ 
+
+示例 1：
+
+输入：arr = [1,2,2,1,1,3]
+输出：true
+解释：在该数组中，1 出现了 3 次，2 出现了 2 次，3 只出现了 1 次。没有两个数的出现次数相同。
+示例 2：
+
+输入：arr = [1,2]
+输出：false
+示例 3：
+
+输入：arr = [-3,0,1,-3,1,1,1,-3,10,0]
+输出：true
+ 
+
+提示：
+
+1 <= arr.length <= 1000
+-1000 <= arr[i] <= 1000
+
+class Solution {
+    /*
+    1.
+    public boolean uniqueOccurrences(int[] arr) {
+        //判断每个数的出现次数是否唯一,由于数组元素值可能为负,故不能用数组储存
+        //1.统计每个数出现次数
+        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        for(Integer i:arr){
+            if(map.containsKey(i))
+                map.put(i,map.get(i)+1);
+            else
+                map.put(i,1);
+        }
+        //2.将map中的次数放到数组中,然后进行排序,如果出现两个相同的值,则说明有重复的返回false,否则返回true
+        int i=0;
+        int[] res = new int[map.size()];
+        for(Integer value : map.values()){
+            res[i++]=value;
+        }
+        Arrays.sort(res);
+        for(i=0;i<res.length-1;i++){
+            if(res[i]==res[i+1])
+                return false;
+        }
+        return true;
+    }
+    */
+
+    /*
+    2.
+    public boolean uniqueOccurrences(int[] arr) {
+        //HashSet和HashMap结合
+        //1.统计每个数出现次数
+        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        for(Integer i:arr){
+            if(map.containsKey(i))
+                map.put(i,map.get(i)+1);
+            else
+                map.put(i,1);
+        }
+        //2.利用set不可重复的特点,若长度不一致,则说明有重复的数字,返回false;否则返回true
+        int i=0;
+        int[] res = new int[map.size()];
+        for(Integer value : map.values()){
+            res[i++]=value;
+        }
+        HashSet<Integer> set = new HashSet<Integer>();
+        for(Integer num : res){
+            set.add(num);
+        }
+        if(set.size()==res.length)
+            return true;
+        else
+            return false;
+    }
+    */
+
+    /*
+    3.
+    public boolean uniqueOccurrences(int[] arr) {
+        //HashSet和HashMap结合
+        //1.统计每个数出现次数
+        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        for(Integer i:arr){
+            if(map.containsKey(i)) map.put(i,map.get(i)+1);
+            else map.put(i,1);
+        }
+        //2.利用set不可重复的特点,是否添加元素成功
+        HashSet<Integer> set = new HashSet<Integer>();
+        for(Integer num : map.values()){
+            if(!set.add(num)) return false;
+        }
+        return true;
+    }
+    */
+
+    4.流
+    public boolean uniqueOccurrences(int[] arr) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i : arr)
+            map.merge(i, 1, Integer::sum);
+        //进行映射
+        int i1 = map.values().stream().distinct().mapToInt(i -> i).sum();
+        int i2 = map.values().stream().mapToInt(i -> i).sum();
+        return i1 == i2;
+    }
+    
+}
+
+总结:
+    1.HashSet.add()方法有返回值,可用于判断是否重复
+    
+    2.stream中distinct方法可用于去重,mapToInt方法用于映射（转型）,sum()求和
