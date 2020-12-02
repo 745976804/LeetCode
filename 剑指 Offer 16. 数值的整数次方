@@ -36,7 +36,7 @@ class Solution {
             x=1/x;
         }
         for(long i = b; i > 0; i>>=1){
-            if(i&1==1)  res*=x;
+            if((i&1)==1)  res*=x;
             x=x*x;
         }
         return res;
