@@ -21,8 +21,11 @@
  *     ListNode(int x) { val = x; }
  * }
  */
+/*
+ //迭代法
 class Solution {
     public ListNode reverseList(ListNode head) {
+        //pre:pre为处理之后链表的头节点;cur:为下一个要处理的链表节点
         ListNode pre = null, cur = head;
         while(cur!=null){
             ListNode temp = cur;
@@ -33,3 +36,21 @@ class Solution {
         return pre;
     }
 }
+
+ //递归法
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        //pre:为处理之后链表的头节点;cur:为下一个要处理的链表节点
+        return reverse(null,head);
+    }
+
+    private ListNode reverse(ListNode pre, ListNode cur){
+        if(cur==null)   return pre;
+        ListNode temp = cur;
+        cur = cur.next;
+        temp.next = pre;
+        pre = temp;
+        return reverse(pre, cur);
+    }
+}
+*/
